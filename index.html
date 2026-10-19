@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step Up Academy | CRM</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #1e293b;
+    }
+
+    header {
+      background: #142b49;
+      color: white;
+      padding: 25px;
+    }
+
+    header h1 { margin: 0; }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .card, .panel {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #0000000a;
+    }
+
+    .card h3 {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    .card strong {
+      font-size: 28px;
+      color: #142b49;
+    }
+
+    .panel { margin-bottom: 25px; }
+
+    input, select, textarea {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font: inherit;
+    }
+
+    button {
+      background: #16a085;
+      color: white;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .table-wrapper { overflow-x: auto; }
+
+    .aviso {
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Step Up Academy</h1>
+    <p>CRM | Gestão de alunos e oportunidades</p>
+  </header>
+
+  <main>
+
+    <section class="cards">
+      <div class="card">
+        <h3>Alunos ativos</h3>
+        <strong>4</strong>
+      </div>
+
+      <div class="card">
+        <h3>Faturamento mensal</h3>
+        <strong>R$ 1.200</strong>
+      </div>
+
+      <div class="card">
+        <h3>Meta de alunos</h3>
+        <strong>14</strong>
+      </div>
+
+      <div class="card">
+        <h3>Meta de faturamento</h3>
+        <strong>R$ 4.200</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Cadastrar novo contato</h2>
+
+      <form id="leadForm">
+        <label for="nome">Nome</label>
+        <input id="nome" required>
+
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="tel">
+
+        <label for="idioma">Idioma</label>
+        <select id="idioma">
+          <option>Inglês</option>
+          <option>Francês</option>
+          <option>Espanhol</option>
+          <option>Português</option>
+        </select>
+
+        <label for="origem">Origem</label>
+        <input id="origem">
+
+        <label for="status">Status</label>
+        <select id="status">
+          <option value="novo">Novo</option>
+          <option value="contatado">Contatado</option>
+          <option value="interessado">Interessado</option>
+          <option value="aula_experimental">Aula experimental</option>
+          <option value="negociacao">Negociação</option>
+          <option value="matriculado">Matriculado</option>
+          <option value="perdido">Perdido</option>
+        </select>
+
+        <label for="proximoContato">Próximo contato</label>
+        <input id="proximoContato" type="date">
+
+        <label for="observacoes">Observações</label>
+        <textarea id="observacoes"></textarea>
+
+        <button type="submit">Adicionar contato</button>
+      </form>
+
+      <p class="aviso">
+        Versão de demonstração. Os contatos ainda não são
+        armazenados no Supabase.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Contatos cadastrados</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Idioma</th>
+              <th>Status</th>
+              <th>Próximo contato</th>
+            </tr>
+          </thead>
+          <tbody id="listaContatos"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const form = document.getElementById("leadForm");
+    const lista = document.getElementById("listaContatos");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const valores = [
+        document.getElementById("nome").value,
+        document.getElementById("idioma").value,
+        document.getElementById("status").value,
+        document.getElementById("proximoContato").value
+      ];
+
+      const linha = document.createElement("tr");
+
+      valores.forEach(function(valor) {
+        const celula = document.createElement("td");
+        celula.textContent = valor || "—";
+        linha.appendChild(celula);
+      });
+
+      lista.appendChild(linha);
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
